@@ -1,0 +1,114 @@
+Python Programming 2 : Data Structures
+Golden West College, Fall 2023
+
+Chapter 8: Binary Trees
+
+Experiment 8-B
+Use the BinarySearchTreeTester.py program shown in Listing 8-12 and provided
+with the code examples from the publisher�s website to do the following
+experiments:
+a. Delete a node that has no children.
+Node to delete: ("Amir", "1996 1") (WARNING this is most probably incorrect; just an example)
+Program results:
+================================================
+Enter key for delete command: Amir 
+Result: 1996 1
+The tree has 10 nodes across 7 levels
+Enter first letter of command: p
+print
+                    RIGHT:   {Vint, 2006 2}
+                        LEFT:    {Tim, 2016 1}
+                RIGHT:   {Ron, 2002 3}
+            RIGHT:   {Raj, 1994 1}
+        RIGHT:   {Ken, 1979 1}
+            LEFT:    {Ivan, 1988 1}
+    RIGHT:   {Herb, 1975 2}
+        LEFT:    {Fran, 2006 1}
+ROOT:    {Don, 1974 1}
+    LEFT:    {Adi, 2002 3}
+Result: None
+================================================
+b. Delete a node that has 1 child node.
+================================================
+Enter key for delete command: Vint
+Result: 2006 2
+The tree has 9 nodes across 6 levels
+Enter first letter of command: p
+print
+                    RIGHT:  {Tim, 2016 1}
+                RIGHT:  {Ron, 2002 3}
+            RIGHT:  {Raj, 1994 1}
+        RIGHT:  {Ken, 1979 1}
+            LEFT:  {Ivan, 1988 1}
+    RIGHT:  {Herb, 1975 2}
+        LEFT:  {Fran, 2006 1}
+ROOT:  {Don, 1974 1}
+    LEFT:  {Adi, 2002 3}
+Result: None
+The tree has 9 nodes across 6 levels
+================================================
+c. Delete a node that has 2 child nodes.
+================================================
+Enter key for delete command: Herb
+Result: 1975 2
+The tree has 8 nodes across 6 levels
+Enter first letter of command: p
+print
+                    RIGHT:  {Tim, 2016 1}
+                RIGHT:  {Ron, 2002 3}
+            RIGHT:  {Raj, 1994 1}
+        RIGHT:  {Ken, 1979 1}
+    RIGHT:  {Ivan, 1988 1}
+        LEFT:  {Fran, 2006 1}
+ROOT:  {Don, 1974 1}
+    LEFT:  {Adi, 2002 3}
+Result: None
+The tree has 8 nodes across 6 levels
+================================================
+
+d. Pick a key for a new node to insert. Determine where you think it will be inserted
+in the tree, and then insert it with the program. Is it easy to determine where it
+will go?
+================================================
+Enter key for insert command: Kyle
+Enter data for insert command: 2006 2
+Result: True
+The tree has 9 nodes across 6 levels
+Enter first letter of command: p
+print
+                    RIGHT:  {Tim, 2016 1}
+                RIGHT:  {Ron, 2002 3}
+            RIGHT:  {Raj, 1994 1}
+                LEFT:  {Kyle, 2006 2}
+        RIGHT:  {Ken, 1979 1}
+    RIGHT:  {Ivan, 1988 1}
+        LEFT:  {Fran, 2006 1}
+ROOT:  {Don, 1974 1}
+    LEFT:  {Adi, 2002 3}
+Result: None
+The tree has 9 nodes across 6 levels
+================================================
+
+e. Repeat the previous step with another key but try to put it in the other child
+branch. For example, if your first node was inserted as the left child, try to put
+one as the right child or in the right subtree.
+================================================
+Enter key for insert command: Ranisan
+Enter data for insert command: 2025 1
+Result: True
+The tree has 10 nodes across 6 levels
+Enter first letter of command: p
+print
+                    RIGHT:  {Tim, 2016 1}
+                RIGHT:  {Ron, 2002 3}
+                    LEFT:  {Ranisan, 2025 1}
+            RIGHT:  {Raj, 1994 1}
+                LEFT:  {Kyle, 2006 2}
+        RIGHT:  {Ken, 1979 1}
+    RIGHT:  {Ivan, 1988 1}
+        LEFT:  {Fran, 2006 1}
+ROOT:  {Don, 1974 1}
+    LEFT:  {Adi, 2002 3}
+Result: None
+The tree has 10 nodes across 6 levels
+================================================
