@@ -1,0 +1,4 @@
+Character: Ham
+Number of speeches: 239
+Random speech without punctuation:
+Then saw you not his face 
