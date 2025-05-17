@@ -7,4 +7,5 @@
 # Start with empty tree, provide insertion order for original sequence that will result in ONLY ONE ROTATION
 
 ## Part C
-# What other inserts besides key 22 will cause a 3-nodde crossover?
+# What other inserts besides key 22 will cause a 3-node crossover?
+
