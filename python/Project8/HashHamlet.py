@@ -2,7 +2,6 @@ from HashTable import HashTable
 
 hTable = HashTable()
 
-'''
 for line in open('Hamlet_2B_or_not_2B.txt', 'r', encoding='windows-1252'):
     for word in line.split():
         word = word.strip('()<>[]{}-_,.!?:;`\'')
@@ -13,4 +12,3 @@ for line in open('Hamlet_2B_or_not_2B.txt', 'r', encoding='windows-1252'):
 
 for item in hTable.traverse():
     print(item[0], "-", item[1])
-'''
