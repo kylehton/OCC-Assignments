@@ -1,0 +1,529 @@
+Course Style Guide (Standards)
+When creating software:
+Write efficient code to ensure high program performance.
+Write readable code to make it easier for other programmers to read and debug. 
+Use appropriate syntax to make your code work with most compilers.
+Follow naming conventions that your company or your team use.
+Although it is clear why efficiency is important, it might not be that clear why readability is equally important.
+Why should your code be readable? As a programmer, you will often review or use code written by someone else, just like other programmers might review or use your code. Being able to quickly understand what someone else wrote is important, not only when modifying code, but also when debugging.
+What about appropriate syntax? Simply because some code might work, it does not mean that it uses the correct syntax and it does not mean that it will work with all compilers (for example, an uninitialized variable will crash the program in some compilers).
+Why should you follow a style guide? When you start working in the industry, you will team up with other programmers, and together you will determine which style guide your team will follow to make communication easier and faster. 
+Many of the following standards are taken from Google and  Microsoft style guides and reflect commonly accepted practices such as the “Don’t Repeat Yourself” (DRY) principle, while others, although not specific to Google or Microsoft, are widely recognized and preferred across the industry.
+Please note that these standards have been carefully selected to help you excel in interviews, even with the most demanding interviewers. Adhering to these guidelines demonstrates your understanding of the importance of efficiency and readability in coding.
+
+
+Course Standards
+Below is your guide to the standard style that you are expected to apply when writing your code, as it will be part of the grading criteria for labs and exams.
+# Naming Conventions
+Standard # 1    - How to name identifiers (Microsoft standard)
+# Variables
+Standard # 2    - When to declare variables (Microsoft & Google standard)
+Standard # 3    - Always initialize all primitive variables (Microsoft standard)
+Standard # 4    - Use the most current type casting (Microsoft & Google standard)
+# Conditions
+Standard # 5    - Nested IF/ELSE statements (efficiency/common practice)
+Standard # 6    - Avoid redundancy! (DRY standard)
+Standard # 7    - And avoid more redundancy! (DRY standard)
+# Loops
+Standard # 8    - Unnecessary repeated calls to functions (efficiency/common practice)
+Standard # 9    - Do not check the same value twice (efficiency/common practice)
+Standard # 10 - Unnecessary repeated operations (efficiency/common practice)
+Standard # 11 - Do not make a FOR loop look like a WHILE loop (Microsoft standard)
+Standard # 12 - FOR vs. WHILE  (Microsoft standard)
+Standard # 13 - Keep the condition expression of a FOR loop simple (Microsoft standard)
+# Parameters
+Standard # 14 - Passing by reference and as constant (Microsoft/Google standard)
+# Objects
+Standard # 15 - Redundant string initialization  (Microsoft & Google standard)
+Standard # 16 - Explicit object initialization  (Google standard)
+Standard # 17 - Accessor functions vs. member variables (efficiency/common practice)
+# Console Output
+Standard # 18 - Using cout to print a paragraph (readability/common practice)
+Standard # 19 - When to use cout and when to use cerr (Google standard)
+# Readability
+Standard # 20 - Choose identifiers that are descriptive (readability/common practice)
+Standard # 21 - Leave a space around operators (readability/Google standard)
+Standard # 22 - Separate your code into meaningful blocks (readability/common practice)
+Standard # 23 - Do not return from a void function (readability/common practice)
+Standard # 24 - Do not interrupt the flow of a FOR loop (readability/common practice)
+Standard # 25 - Keep statements short (readability/common practice)
+Standard # 26 - Keep indentation style consistent (readability/common practice)
+Standard #27 - Implicit/explicit conversion (readability/Microsoft & Google standard)
+
+
+Standard # 1 - How to name identifiers (Microsoft standard)
+We will work as a team; therefore, we will all use the same set of rules for choosing the character sequence for identifiers.
+Use camelCase for:
+Variables (var, myVariable, aVariable)
+Objects (obj, myObject, anObj)
+Functions (func, myFunction, aFunction)
+
+
+Use all CAPITAL_LETTERS separated by an underscore ( _ ) if more than one word for:
+GLOBAL constants (CONSTANT, MY_CONSTANT)
+NOTE: This does not include const parameters.
+
+
+Use PascalCase (this is also called UpperCamelCase) for:
+Classes (MyClass, BaseClass, DerivedClass)
+Files (Main.cpp, MyClass.h, MyClass.cpp)
+(top)
+Standard # 2 - When to declare variables (Microsoft/Google standard)
+There is no need to declare and initialize all the variables at the top of your function. Doing so might occupy memory unnecessarily. Instead, declare and initialize each variable only before the first statement that uses them.
+INEFFICIENT
+ int numOfBoxes = 0;
+ double price = 0.0;  // not used until later
+ cout << "Enter how many boxes you would like to sell: ";
+ cin >> numOfBoxes;
+ cout << "Enter the price for each box: ";
+ cin >> price;
+
+ cout << "If you can sell " << numOfBoxes
+     << "for $" << price
+     << " you will make: $" << (numOfBoxes * price) << "\n";
+OPTIMIZED
+int numOfBoxes = 0;
+cout << "Enter how many boxes you would like to sell: ";    
+cin >> numOfBoxes;
+     
+double price = 0.0;
+cout << "Enter the price for each box: ";
+cin >> price;
+     
+cout << "If you can sell " << numOfBoxes
+    << "for $" << price
+    << " you will make: $" << (numOfBoxes * price) << "\n";
+Both variables, numOfBoxes and price, should be declared and initialized right before they are used.
+(top)
+Standard # 3 - Always initialize all primitive variables (Microsoft standard)
+Below is an example of uninitialized variables. If you do not initialize primitive variables, the compiler will detect this either as an error or a warning (unreferenced local variable). Note that NOT all compilers will detect this, but the new ones will.
+INCORRECT
+// values are undefined
+int number;
+char char;
+double decimal;
+CORRECT
+int number = 0;
+char char = ‘y’; // a good choice if a yes/no answer is expected
+double decimal = 0.0;  // Remember to use zeros 
+                       // both before AND after the decimal point.
+Choose default values that make sense. For example, if the character is used to answer yes/no questions, then the default value should be either ‘y’ or ‘n’.
+(top)
+Standard # 4 - Use the most current type casting (Microsoft/Google standard)
+Casting converts data from one type to another. Do NOT use the old syntax: (double) number. Writing the type in parenthesis before the variable identifier is an outdated format that still works on most compilers; however, it will eventually be deprecated and no longer supported.
+OUTDATED
+int number = 3;
+double half = (double)number / 2; // old syntax
+CORRECT
+int number = 3;
+double half = static_cast<double>(number) / 2; 
+Note that the variable number will remain an int, but it will be treated as a double to complete the division operation.
+(top)
+Standard # 5 - Nested IF/ELSE statements (efficiency/common practice)
+A nested IF/ELSE statement performs much faster than a series of single-selection IF statements.
+INEFFICIENT
+if (grade == ‘A’) ...
+if (grade == ‘B’) ...
+if (grade == ‘C’) ...
+if (grade == ‘D’) ...
+OPTIMIZED
+if (grade == ‘A’) ... // If this is true, none of
+                       // the others will be considered.
+else if (grade == ‘B’) ...
+else if (grade == ‘C’) ...
+else if (grade == ‘D’) ...
+By writing IF/ELSE statements, there is a possibility of an early exit after one of the conditions is satisfied.
+Additional tip: When you have an IF/ELSE block like the one above, place the conditions that are more likely to be true at the top, to make your code more efficient. 
+(top)
+Standard # 6 - Avoid redundancy! (DRY standard)
+The IF condition (num > 3) below is a Boolean expression and will be either TRUE or FALSE. Therefore, there is no need to write "return true; else return false;" when a simple return followed by the Boolean expression will do.
+REDUNDANT
+bool func(int num)
+{
+     if (num < 3)     // unnecessary if/else block
+         return true;
+     else
+         return false;
+}
+OPTIMIZED
+bool func(int num)
+{
+     return (num < 3);
+}
+(top)
+Standard # 7 - And avoid more redundancy!  (DRY standard)
+If the type of a variable is Boolean, then there is no need to compare it to TRUE or FALSE. 
+REDUNDANT
+// Assume variable ‘done’ is a Boolean.
+if (done == false) // REDUNDANT!
+{
+     // some code...
+}
+OPTIMIZED
+if (!done)
+ {
+     // some code...
+ }
+The variable done is already a Boolean expression and will have a specific value, either TRUE or FALSE. 
+(top)
+Standard # 8 - Unnecessary repeated calls to functions (efficiency/common practice)
+The call to the size() function in the code below will execute in each iteration, and it will always give the same result because the number of elements in the vector remains constant. Use a variable instead. 
+INEFFICIENT
+// Vector aVector contains several elements.
+for (size_t i = 0; i < aVector.size(); ++i) // repeated call to function
+     cout << aVector[i] << "";
+OPTIMIZED
+size_t size = aVector.size();   // use a variable instead
+for (size_t i = 0; i < size; ++i)
+     cout << aVector[i] << "";
+Note that although this is not necessarily true with new compilers, in general it is better to pay attention to unnecessary function calls in a loop header.
+Also, keep in mind that function size() does NOT return an int, but it returns an unsigned integer. Therefore, you can either use size_t as a type (preferred) OR cast the return value to an int as shown below.
+OPTIMIZED (using ‘int’ type)
+int size = static_cast<int>(aVector.size());
+for (int i = 0; i < size; ++i)
+     cout << aVector[i] << "";
+(top)
+Standard # 9 - Do not check the same value twice (efficiency/common practice)
+Here is an example of unnecessarily repeating the same statement.
+INEFFICIENT
+// Finding the minimum value.
+// Set the minimum value to the first element in the array.
+ int min = a[0];
+
+
+// The loop checks the first element again.
+ for (int i = 0; i < numOfElements; ++i)
+     if (a[i] < min) ...
+OPTIMIZED
+// Finding the minimum value.
+// Set the minimum value to the first element in the array.
+int min = a[0];
+
+// Start the loop from the second element.
+for (int i = 1; i < numOfElements; ++i)
+     if (a[i] < min) ...
+By initializing min with the first element of the array (a[0]) and starting the loop from the second element (i = 1), you avoid comparing the first element with itself. This reduces the number of unnecessary comparisons, making the code slightly more efficient.
+(top)
+Standard # 10 - Unnecessary repeated operations (efficiency/common practice)
+Do not perform unnecessary operations multiple times when you can reduce it to one statement.
+INEFFICIENT
+while ( /* looping n times */ )
+ {
+     // some code...
+     // incrementing count n times...
+     ++count; // will increment at each iteration
+ }
+If you already know how many times the variable count will increment, then you can store the final value of count when the loop is done.
+OPTIMIZED
+while ( /* looping n times */ )
+{
+     // some code...
+}
+count = n; // A value already known. 
+(top)
+Standard # 11 - Do not make a FOR loop look like a WHILE loop  (Microsoft standard)
+Avoid being tempted to adopt unusual syntax. Remember that the simpler the code, the more readable it is.
+This format of the FOR loop below is unconventional and can be confusing to readers who are accustomed to the typical for loop structure. Most programmers expect a for loop to have its initialization, condition, and increment expressions clearly defined within the loop header. When these elements are missing or rearranged, it can disrupt the flow of understanding.
+NON-STANDARD
+int i = 0;
+for ( ; i < limit; ) // This looks like a WHILE loop, doesn’t it?
+{
+     // some code...
+    ++i;
+}
+STANDARD
+int i = 0;
+while ( i < limit )
+{
+     // some code...
+     ++i;
+}
+(top)
+Standard # 12 - FOR vs. WHILE  (Microsoft standard)
+A FOR loop is designed to end its cycle, often referred to as a "counting" loop. Do NOT break a FOR loop before it reaches the end.
+NON-STANDARD
+bool func(const int a[], int numOfElem, int searchValue)
+ {
+     for ( int i = 0; i < numOfElem; ++i )
+          if ( a[i] == searchValue )
+               return true; // The loop will be truncated
+                             // before it ends. AVOID!
+     return false;
+ }
+STANDARD
+bool func(const int a[], int numOfElem, int searchValue)
+ {
+     int i = 0;
+     while ( i < numOfElem)
+     {
+        if ( a[i] == searchValue )
+           return true;
+        else
+           ++i;
+     }
+     return false;
+ }
+If a loop needs to be stopped before it reaches the end, it is better to use a WHILE loop. This approach is especially useful when debugging, as it allows programmers to confidently skip over completed FOR loops and focus their efforts on finding the bug more efficiently.
+(top)
+Standard # 13 - Keep the condition expression of a FOR loop simple  (Microsoft standard)
+Never use any of the following in a FOR loop:
+Equality operator EQUAL ( == )
+Equality operator NOT ( != )
+Logical operator AND ( && )
+Logical operator OR ( || ) 
+=> Use a WHILE loop instead.
+This FOR loop has a condition that can produce unexpected results. How? Assume that we change the loop so that it increments the variable i by 2. If we are not careful enough, we might forget to adjust the ending condition, thus creating an infinite loop if the limit is an odd number.
+NOT RECOMMENDED (prone to errors)
+// Having a negation is NOT recommended.
+for ( int i = 0; i != someValue; ++i)
+{
+     // some code...
+}
+
+// Having more than one condition is NOT recommended.
+for ( int i = 0; i < someValue || j < someOtherValue; ++i)
+{
+     // some code...
+}
+Using a WHILE loop would make the code much more readable.
+Note:
+If you change the standard format of a loop header, the statement becomes less readable. Use a WHILE loop when you need more flexibility.
+This applies to counting loops only, not loops that use pointers or iterators.
+(top)
+Standard # 14 - Passing by reference and as constant  (Microsoft/Google standard)
+Passing an object by reference is good for performance reasons because it can eliminate the pass-by-value overhead (copying the data).
+INEFFICIENT
+// This function will make a copy of the string and the vector.
+void func(string str, vector<int> aVector) { ... }
+OPTIMIZED
+void func(string & str, vector<int> & aVector);
+The function will receive only the respective addresses.
+When passing by reference, you need to consider whether the parameter should be constant. If the original string and vector do not need to be modified, then you should add a const modifier as shown below.
+OPTIMIZED (as constant parameters)
+void func(const string & str, const vector<int> & aVector); 
+(top)
+Standard # 15 - Redundant string initialization  (Google standard)
+A string is an STL object with its own constructor that initializes the string to an empty string.
+REDUNDANT
+string str = ""; // unnecessary and redundant
+OPTIMIZED
+string str;  // will initialize the string to an empty string
+(top)
+Standard # 16 - Explicit object initialization  (Google standard)
+If available, you should use the parameterized constructor, which accomplishes everything in a single statement. In addition to being more efficient and readable, using a parameterized constructor eliminates the need for additional calls to mutator functions.
+INEFFICIENT
+// Objects of MyClass have 3 member variables.
+MyClass obj;					// call to constructor
+obj.setMemberVar1(someValue1);        // call to mutator function
+obj.setMemberVar2(someValue2);        // call to mutator function
+obj.setMemberVar3(someValue3);        // call to mutator function
+OPTIMIZED
+// Single call sets up the object explicitly.
+MyClass obj ( someValue1, someValue2, someValue3 );
+(top)
+Standard # 17 - Accessor functions vs. member variables (efficiency)
+Avoid calling an accessor function when you have direct access to the private member variables of a class.
+The function below  is a member of the class MyClass; therefore, it can access the member variables of the class directly. Calling the get() functions will require two steps: (1) invoke the get() function and (2) retrieve the value of the member variable. This can be reduced to a one-step statement when accessing the member variable directly.
+INEFFICIENT
+void MyClass::func(const MyClass& paramObj) const
+{
+   // get member variable of calling and parameter object
+   cout << getMemberVar() << paramObj.getMemberVar(); 
+}
+OPTIMIZED
+void MyClass::func(const MyClass& otherObject) const
+{
+   // direct access to member variables
+   cout << memberVar << otherObject.memberVar;
+}
+(top)
+Standard # 18 - Using cout to print a paragraph (readability/common practice)
+The code below shows a repeated call to the cout function, which can make the program less efficient if overused. 
+MULTIPLE cout CALLS
+cout << "Hi.\n";
+cout << "How are you?\n";
+cout << "My name is Stitch.\n";
+cout << "What is your name? ";
+OPTIMIZED
+cout << "Hi.\n"
+    << "How are you?\n"
+    << "My name is Stitch.\n"
+    << "What is your name? ";
+Make sure your code is readable by separating each printed paragraph with its own cout.
+(top)
+Standard # 19 - When to use cout and when to use cerr  (Google standard)
+cout stands for "console output" and displays the standard output stream.
+cerr stands for "console error" and displays the standard output stream for errors--it can be used to collect errors and write them to a file.
+Which one to choose?
+Assume the user is searching for a specific book in the library. If the book is not in the library, there is nothing wrong with the software; the issue may be that someone checked the book out or that the library does not carry it. In this case, using cout to print a message is appropriate.
+cout << "The book is not available at this time.";
+Now assume there is a problem with the database, and the search cannot be completed. The program runs but stops at a point where a message is printed indicating that the database is empty (that is, the library has no books). In this case, the problem should be brought to the attention of the team that maintains the program; therefore, you should use cerr.
+cerr << "There are no books in the database."; 
+(top)
+Standard # 20 - Choose identifiers that are descriptive (readability/common practice)
+Any identifier that requires a programmer to spend a few seconds figuring out its meaning makes the code unreadable. While identifiers like ‘noe’ (number of elements) and ‘d’ (double) might seem obvious when you are writing your code, they may not be as clear to another programmer.
+NON-DESCRIPTIVE IDENTIFIERS
+int b = 32;
+while (noe < 2)...
+if (d < 10000.0)...
+void someFunction (const string& param);
+DESCRIPTIVE IDENTIFIERS
+int boxes = 32;
+while ( noOfElements < 2)...
+if ( salary < 10000.0)...
+void someFunction (const string& lastName);
+Avoid abbreviating identifiers for STL containers. For example, using ‘s’ to identify an STL set can be confusing as the STL also includes a stack class.
+DESCRIPTIVE IDENTIFIERS FOR STL CONTAINERS
+//instead of ‘v’
+vector<int> aVector = { 45, 32, 78, 94, 25 }; 
+
+//instead of ‘s’
+set<int> aSet = { 1, 2, 3, 4, 5 }; 
+
+//instead of ‘m’ or ‘mm’ or ‘map’
+multimap<int, char> multiMap; 
+
+If  you are using iterators for different types of STL containers within a function, choose identifiers that clearly denote the type of iterator.
+DESCRIPTIVE IDENTIFIERS FOR STL ITERATORS
+vector<int> aVector = { 45, 32, 78, 94, 25 };
+auto iterVector = aVector.begin(); 
+
+set<int> aSet = { 1, 2, 3, 4, 5 };
+auto iterSet = aSet.begin(); 
+
+Finally, do not use ‘size’ for arrays, as it can be confusing due to varying conventions in different textbooks and programming contexts. Instead, use ‘capacity’ for the physical length of the array and ‘numOfElem’ for the number of elements stored in the array.
+(top)
+Standard # 21 - Leave a space around operators (Google standard)
+Readability can be highly improved by adding a few spaces around operators.
+NOT READABLE (too cluttered)
+int boxes=3;
+double price=4.5,totalDiscounted=boxes*price-2;
+READABLE
+int boxes = 3;
+double price = 4.5,
+       totalDiscounted = (boxes * price) - 2;
+Aligning variables of the same type vertically, instead of writing them one after the other, also helps with readability, and adding parenthesis makes it easier to detect calculation errors.
+Exceptions where a space should not be added:
+Increment/decrement operators
+Short-hand notation (you cannot put a space in between operators such as += )
+Arrow operator
+Scope resolution operator
+(top)
+Standard # 22 - Separate your code into meaningful blocks (readability/common practice)
+Do not write one statement after the other. Separate blocks of code with a single blank line. It makes your code more readable when debugging.
+while(quantity < 10)
+ {
+     // statement 1
+     // statement 2
+ }
+         // Empty line between WHILE block and user interaction.
+ cout << "...";
+ cin >> userInput;
+ cout << "...";
+         // Empty line between user interaction and IF/ELSE block.
+ if(...)
+     // statement 1
+ else if
+     // statement 2
+ else
+     // statement 3 
+(top)
+Standard # 23 - Do not return from a void function (readability/common practice)
+A void function does not need a return statement. Choose a more elegant way to exit a void function.
+NON STANDARD
+// A void function has NO return a value.
+void func(int value, int n1, int n2)  
+{
+     while (n1 < n2)
+     {
+         // some code...
+         if (n1 == value)
+             return; // No! Hard to detect when debugging.
+        else...
+             // some code...
+    }
+}
+STANDARD
+void func(int value, int n1, int n2)
+ {
+     bool done = false;
+     while (!done && (n1 < n2)) // appropriate syntax
+    {
+         // some code...
+         if (n1 == value)
+             done = true;
+         else
+             ++n1;
+     }
+ } 
+(top)
+Standard # 24 - Do not interrupt the flow of a FOR loop (readability/common practice)
+Disrupting the normal flow of a FOR loop is generally discouraged in some programming practices because it can lead to potential issues with readability, maintainability, and predictability of the code. For this reason, remember the following:
+Do NOT use break (except on switch statements).
+Do NOT use continue.
+Always choose an elegant way to exit loops and functions.
+A Boolean value might require a few more statements, but it is more readable.
+NOT RECOMMENDED
+for ( int i = 0; i < numOfElem; ++i )
+     if ( a[i] == searchValue)
+         break;  // AVOID!
+BEST CHOICE
+int i = 0;
+bool done = false;
+while (!done && i < numOfElem)
+     if ( a[i] == searchValue)
+         done = true; 
+(top)
+Standard # 25 - Keep statements short (readability/common practice)
+Avoid long statements that might require horizontal scrolling. Keep the length to no more than 70 columns--a column is a character or a space (this includes indentation spaces).
+
+The standards for breaking statements in code to improve readability typically include:
+After logical operators
+After binary operators
+After assignment operators
+After commas (in argument lists)
+Before insertion and extraction operators.
+STANDARD
+if (user.isLoggedIn() && user.hasPermission("edit") &&                                
+           !user.isSuspended() && user.getAccountAge() > 18)
+{
+    grantAccess(user);
+}
+
+cout << "User " << user.getName()
+     << " with ID " << user.getId()
+     << " has logged in from " << user.getLocation()
+     << " at " << currentTime << endl; 
+(top)
+Standard # 26 - Keep indentation style consistent (readability/common practice)
+In C++, the placement of opening curly brackets is a matter of style and convention. However, it is often preferable to place the opening curly brackets on a new line, as this can improve readability, maintain consistency with certain other languages, and aid in debugging.
+INEFFICIENT
+if (condition) {   // curly bracket placed at the end of statement
+    // code block
+}
+OPTIMIZED
+if (condition) 
+{                // curly bracket placed on a new line
+     // code block
+}
+No matter the style, always ensure that it is consistent throughout the code.
+(top)
+Standard #27 - Implicit/Explicit conversion (readability/Microsoft & Google standard)
+In the C programming language, integers are used to represent Boolean values because C lacks explicit Boolean types. C++ introduced the bool type to improve readability and code clarity. By using the bool type explicitly, it becomes evident to whoever reads the code that the variable is intended to hold a Boolean value—either TRUE or FALSE—simplifying the understanding of the code's purpose. 
+NOT-RECOMMENDED
+bool isEven(int num)
+{
+     return ((num + 1) % 2); 
+        // Returns an integer, implicitly converted to bool.
+        // Also not readable.
+}
+RECOMMENDED
+bool isEven(int num)
+{
+     return (num % 2 == 0); 
+        // Explicitly returns a Boolean value.
+}
+It is important to note that the problem with using integers for Boolean operations in C++ is that it can easily lead to confusion and make the code less intuitive. While any non-zero value is treated as TRUE in both C and C++, the explicit use of bool in C++ ensures that Boolean operations behave as expected without any ambiguity regarding the intent of the code. This enhances the overall maintainability and represents a more modern and safer approach to handling Boolean logic.
+(top)
+
+
